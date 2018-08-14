@@ -1,6 +1,6 @@
 const path = require('path');
 var HtmlwebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin  = require('extract-text-webpack-plugin');
+// var ExtractTextPlugin  = require('extract-text-webpack-plugin');
 var webpack = require('webpack');
 
 module.exports = {
@@ -32,19 +32,16 @@ module.exports = {
 			},
 			{
 				test: /\.scss$/,
-				use: ExtractTextPlugin.extract({
-					fallback: 'style-loader',
-					use: ['css-loader', 'sass-loader']
-				})
+				use: ['css-loader', 'sass-loader', 'style-loader']
 			},
 			{
-				test: /\.(png|jpg|gif)$/,
+				test: /\.(png|jpg|gif)$/i,
 				use: [
 					{
-						loader:'url-loader',
-						option:{
-							limit:8192,
-							name:'resource/[name].[ext]'
+						loader: 'url-loader',
+						options: {
+							limit: 8192,
+							name: 'resource/[name].[ext]'
 						}
 					}
 				]
@@ -53,21 +50,16 @@ module.exports = {
 				test: /\.(eot|svg|ttf|woff|woff2|otf)$/,
 				use: [
 					{
-						loader:'url-loader',
-						option:{
-							limit:8192
-						}
+						loader: 'url-loader',
 					}
 				]
 			}
 		]
 	},
 	plugins: [
-		new HtmlwebpackPlugin(),
-		new ExtractTextPlugin('index.css'),
-		new webpack.optimize.CommonsChunkPlugin({
-			name: 'common',
-			filename: 'js/base.js'
-		})
-	]
+		new HtmlwebpackPlugin({ template: __dirname + "/src/indexhtml.html"})
+	],
+	devServer: {
+		contentBase: './dist'
+	},
 }
