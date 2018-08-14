@@ -57,7 +57,7 @@ module.exports = {
 		]
 	},
 	plugins: [
-		new HtmlwebpackPlugin({ template: __dirname + "/src/indexhtml.html"})
+		new HtmlwebpackPlugin({ template: __dirname + "/src/index.html"})
 	],
 	devServer: {
 		contentBase: './dist'
