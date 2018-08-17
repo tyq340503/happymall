@@ -2,9 +2,21 @@
     display: block;
     height:160px;
     text-align: center;
-
+    opacity: 0.9;
+    transition: all 0.3s;
     &:hover{
         text-decoration: none;
-        color:#333;
+        color:#666;
+        transform: scale(1.03);
+    }
+
+    .count{
+        font-size: 50px;
+        height: 80px;
+        line-height: 80px; 
+    }
+
+    .desc{
+        font-size: 18px;
     }
 }
