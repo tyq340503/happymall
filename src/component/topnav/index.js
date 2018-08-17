@@ -1,13 +1,23 @@
 import React from 'react';
+import UserService from 'service/userService.js';
+import Util from 'util/util.js';
 
+const _userService = new UserService();
+const _util = new Util();
 
 export class TopNav extends React.Component {
     constructor(props) {
         super(props);
     }
 
-    onLogOut(){
+    onLogOut() {
         console.log('logout');
+        _userService.logOut().then((res) => {
+            window.localStorage.removeItem('username');
+            window.location.href = '/login';
+        }, (err) => {
+            _util.sendErr(err);
+        })
     }
 
     render() {
@@ -221,7 +231,7 @@ export class TopNav extends React.Component {
                                 <li><a href="#"><i className="fa fa-gear fa-fw"></i> Settings</a>
                                 </li>
                                 <li className="divider"></li>
-                                <li><a href="#" onClick={()=>{this.onLogOut()}}><i className="fa fa-sign-out fa-fw"></i> Logout</a>
+                                <li><a href="#" onClick={() => { this.onLogOut() }}><i className="fa fa-sign-out fa-fw"></i> Logout</a>
                                 </li>
                             </ul>
 

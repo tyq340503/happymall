@@ -4,7 +4,7 @@ const _util = new Util();
 export class UserService {
     login(info) {
         return _util.request({
-            url: 'http://admintest.happymmall.com/manage/user/login.do',
+            url: '/manage/user/login.do',
             type: 'post',
             data: info
         })
@@ -28,5 +28,12 @@ export class UserService {
         return {
             status: true
         }
+    }
+
+    logOut() {
+        return _util.request({
+            url: '/user/logout.do',
+            type: 'post'
+        })
     }
 }
