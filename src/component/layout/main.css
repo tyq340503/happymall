@@ -384,6 +384,11 @@ border-radius: 0 0 4px 4px;
 color: #225081;
 background:none;
 }
+
+.top-navbar .navbar-right > li:hover .dropdown-menu {
+    display: block;
+}
+
 .dropdown-tasks{
 width: 255px;
 }

@@ -12,7 +12,9 @@ module.exports = {
 	resolve: {
 		alias: {
 			page: path.resolve(__dirname, './src/page'),
-			component: path.resolve(__dirname, './src/component')
+			component: path.resolve(__dirname, './src/component'),
+			util: path.resolve(__dirname, './src/util'),
+			service: path.resolve(__dirname, './src/service')
 		}
 	},
 	module: {
@@ -68,8 +70,14 @@ module.exports = {
 	devServer: {
 		port: 8080,
 		contentBase: './dist',
-		historyApiFallback:{
-			index:'index.html'
+		historyApiFallback: {
+			index: 'index.html'
+		},
+		proxy: {
+			'/manage': {
+				target: 'http://admintest.happymmall.com',
+				changeOrigin: true
+			}
 		}
 	},
 }

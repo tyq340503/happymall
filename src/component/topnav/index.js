@@ -6,6 +6,10 @@ export class TopNav extends React.Component {
         super(props);
     }
 
+    onLogOut(){
+        console.log('logout');
+    }
+
     render() {
         return (
             <div>
@@ -217,7 +221,7 @@ export class TopNav extends React.Component {
                                 <li><a href="#"><i className="fa fa-gear fa-fw"></i> Settings</a>
                                 </li>
                                 <li className="divider"></li>
-                                <li><a href="#"><i className="fa fa-sign-out fa-fw"></i> Logout</a>
+                                <li><a href="#" onClick={()=>{this.onLogOut()}}><i className="fa fa-sign-out fa-fw"></i> Logout</a>
                                 </li>
                             </ul>
 
