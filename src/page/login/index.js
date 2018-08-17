@@ -11,7 +11,9 @@ export class Login extends React.Component {
         super(props);
         this.state = {
             email: '',
+            emailflag: false,
             password: '',
+            passwordflag: false,
             redirect: _util.getUrl('redirect') || '/'
         }
     }
@@ -31,6 +33,7 @@ export class Login extends React.Component {
         if (flag.status) {
 
             _userService(loginInfo).then((res) => {
+                window.localStorage.setItem('username', res.usernmae);
                 this.props.history.push(this.state.redirect);
             }, (err) => {
                 _util.sendErr(err);

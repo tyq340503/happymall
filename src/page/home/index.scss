@@ -1,0 +1,10 @@
+.color-box{
+    display: block;
+    height:160px;
+    text-align: center;
+
+    &:hover{
+        text-decoration: none;
+        color:#333;
+    }
+}
