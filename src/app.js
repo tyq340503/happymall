@@ -2,8 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Home } from 'page/home/index.js';
 import { Login } from 'page/login/index.js';
+import { UserList } from 'page/user/index.js'
+import { Error } from 'page/error/index.js';
 import { LayOut } from 'component/layout/index.js';
-import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Link, Redirect } from 'react-router-dom';
+
 
 let x = <div>hello</div>;
 
@@ -15,22 +18,30 @@ class TestComponent extends React.Component {
         }
 
     }
+
     render() {
+
+        let routerLink = (
+            <LayOut>
+                <Switch>
+                    <Route exact path="/" component={Home}></Route>
+                    <Route path="/product" component={Home}></Route>
+                    <Route path="/user/index" component={UserList}></Route>
+                    <Redirect exact from="/user" to="/user/index"></Redirect>
+                    <Route component={Error}></Route>
+                </Switch>
+            </LayOut>
+        );
+
         return (
             <div>
                 <BrowserRouter>
-                    <Route path="/login" component={Login}></Route>
-                    <Route path="/" render={
-                        props => (
-
-                            <LayOut>
-                                <Switch>
-                                    <Route exact path="/" component={Home}></Route>
-                                    <Route path="/product" component={Home}></Route>
-                                </Switch>
-                            </LayOut>
-                        )
-                    }></Route>
+                    <Switch>
+                        <Route path="/login" component={Login}></Route>
+                        <Route path="/" render={
+                            props => routerLink
+                        }></Route>
+                    </Switch>
                 </BrowserRouter>
 
             </div>
