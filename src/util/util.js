@@ -6,7 +6,7 @@ export class Util {
                 url: param.url || '',
                 dataType: param.dataType || 'json',
                 data: param.data || null,
-                success(res) {
+                success: (res) => {
                     // console.log(res);
                     if (res.status == 0) {
                         typeof resolve == 'function' && resolve(res.data, res.msg);
@@ -16,7 +16,7 @@ export class Util {
                         typeof reject == 'function' && reject(res.data || res.msg);
                     }
                 },
-                error(err) {
+                error: (err) => {
                     typeof reject == 'function' && reject(err.statusText);
                 }
             })
