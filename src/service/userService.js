@@ -36,4 +36,12 @@ export class UserService {
             type: 'post'
         })
     }
+
+    loadUserList(pageNum) {
+        return _util.request({
+            url: '/manage/user/list.do',
+            type: 'post',
+            data: { pageNum: pageNum }
+        })
+    }
 }
