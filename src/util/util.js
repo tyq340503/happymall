@@ -31,6 +31,10 @@ export class Util {
         alert(err);
     };
 
+    successTips(res) {
+        alert(res);
+    };
+    
     getUrl(name) {
         let queryurl = window.location.search.split('?')[1] || ''
         let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
