@@ -4,13 +4,14 @@ import Pagination from 'rc-pagination';
 import 'rc-pagination/dist/rc-pagination.min.css';
 import Util from 'util/util.js';
 import TableList from 'util/tableList/index.js';
-import UserService from 'service/userService.js';
+import ProductService from 'service/productService.js';
+
 // import Pagination from 'util/pagination/index.js';
 
 const _util = new Util();
-const _userService = new UserService();
+const _productService = new ProductService();
 
-export class User extends React.Component {
+export class Cotegory extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -19,18 +20,19 @@ export class User extends React.Component {
             pageNum: 1,
             firstLoad: true,
             searchType: 'productId',
-            searchKeyWord: ''
+            searchKeyWord: '',
+            parentCateId: 0
         };
     }
 
     componentDidMount() {
-        this.loadUserList()
+        this.loadCateList()
     }
 
-    loadUserList() {
+    loadCateList() {
         let params = {}
-        _userService.loadUserList(this.state.pageNum).then(res => {
-            this.setState(res);
+        _productService.getClass(this.state.parentCateId).then(res => {
+            this.setState({ list: res });
         }, err => {
             this.setState({ list: [] });
             _util.sendErr(err);
@@ -41,7 +43,7 @@ export class User extends React.Component {
         this.setState({
             pageNum: pageNum
         }, () => {
-            this.loadUserList();
+            this.loadCateList();
         })
     }
 
@@ -54,18 +56,46 @@ export class User extends React.Component {
     }
 
     onSearch() {
-        
+
+    }
+
+    update(id, name) {
+        let newname = window.prompt('new name', id);
+        if (newname) {
+            _productService.updateCateName({
+                categoryId: id,
+                categoryName: newname
+            }).then(res => {
+                this.loadCateList()
+            }, err => {
+                _util.sendErr(err);
+            })
+        }
+    }
+
+    componentDidUpdate(props, state) {
+        if (props.location.pathname != this.props.location.pathname) {
+            this.setState({
+                parentCateId: this.props.match.params.categoryId || 0
+            }, () => {
+                this.loadCateList()
+            })
+        }
     }
 
     render() {
-        let message = (this.state.list.map((user, index) => {
+        let message = (this.state.list.map((category, index) => {
             return (
                 <tr key={index}>
-                    <td>ID</td>
-                    <td>{user.username}</td>
-                    <td>{user.email}</td>
-                    <td>product</td>
-                    <td>order</td>
+                    <td>{category.id}</td>
+                    <td>{category.name}</td>
+                    <td>
+                        <a className="opear"
+                            onClick={e => { this.update(category.id, category.name) }}></a>
+                        {
+                            category.parentId ? <Link to={`/product-category/index/${category.id}`}> see childcategory</Link> : null
+                        }
+                    </td>
                 </tr>
 
             );
@@ -77,11 +107,9 @@ export class User extends React.Component {
         // )
         // let showBody = this.state.list.length > 0 ? message : error;
         let headContent = [
-            { name: 'ID', width: '10%' },
-            { name: 'username', width: '20%' },
-            { name: 'email', width: '10%' },
-            { name: 'product', width: '35%' },
-            { name: 'order', width: '15%' },
+            { name: 'CotegoryId', width: '10%' },
+            { name: 'CotegoryName', width: '40%' },
+            { name: 'operate', width: '10%' }
         ];
         return (
 

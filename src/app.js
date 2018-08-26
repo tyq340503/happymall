@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Home } from 'page/home/index.js';
+import { ProductRouter } from 'page/product/index/index.js';
 import { Login } from 'page/login/index.js';
 import { UserList } from 'page/user/index.js'
 import { Error } from 'page/error/index.js';
@@ -25,7 +26,8 @@ class TestComponent extends React.Component {
             <LayOut>
                 <Switch>
                     <Route exact path="/" component={Home}></Route>
-                    <Route path="/product" component={Home}></Route>
+                    <Route path="/product" component={ProductRouter}></Route>
+                    <Route path="/product-category" component={ProductRouter}></Route>
                     <Route path="/user/index" component={UserList}></Route>
                     <Redirect exact from="/user" to="/user/index"></Redirect>
                     <Route component={Error}></Route>

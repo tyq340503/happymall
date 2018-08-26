@@ -3,11 +3,13 @@ var HtmlwebpackPlugin = require('html-webpack-plugin');
 // var ExtractTextPlugin  = require('extract-text-webpack-plugin');
 var webpack = require('webpack');
 
+let WEBPACK_ENV = process.env.WEBPACK_ENV || 'dev'
+
 module.exports = {
 	entry: './src/app.js',
 	output: {
 		path: path.resolve(__dirname, 'dist'),
-		filename: 'bundle.js'
+		filename: WEBPACK_ENV == 'dev' ? 'bundle.js' : '//c.chaoxic.com/happymall/dist/'
 	},
 	resolve: {
 		alias: {
