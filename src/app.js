@@ -27,6 +27,7 @@ class TestComponent extends React.Component {
                 <Switch>
                     <Route exact path="/" component={Home}></Route>
                     <Route path="/product" component={ProductRouter}></Route>
+                    <Route path="/product-category" component={ProductRouter}></Route>
                     <Route path="/user/index" component={UserList}></Route>
                     <Redirect exact from="/user" to="/user/index"></Redirect>
                     <Route component={Error}></Route>

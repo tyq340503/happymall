@@ -1,6 +1,8 @@
 import React from 'react';
 import { ProductList } from 'page/product/index/index.js';
 import { ProductSave } from 'page/product/index/save.js';
+import ProductService from 'service/productService.js';
+
 import { BrowserRouter, Switch, Route, Link, Redirect } from 'react-router-dom';
 
 const _util = new Util();
