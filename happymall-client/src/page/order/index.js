@@ -143,14 +143,14 @@ export class OrderList extends React.Component {
                                 return (
                                     <tr key={index}>
                                         <td>
-                                            <Link className="opear" to={`order/detail/${order.orderNumber}`}>{order.orderNo}</Link>
+                                            <Link className="opear" to={`order/detail/${order.orderNo}`}>{order.orderNo}</Link>
                                         </td>
                                         <td>{order.recieveName}</td>
                                         <td>{order.statusDesc}</td>
                                         <td>{order.payment}</td>
                                         <td>{order.createTime}</td>
                                         <td>
-                                            <Link className="opear" to={`order/detail/${order.orderNumber}`}>order detail</Link>
+                                            <Link className="opear" to={`order/detail/${order.orderNo}`}>order detail</Link>
                                         </td>
                                     </tr>
 
