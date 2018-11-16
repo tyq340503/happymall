@@ -10,6 +10,7 @@
     "webpack": "^1.13.3"
   },
   "scripts": {
+    "start": "react-scripts start",
     "dev": "webpack-dev-server --config webpackdev.config.js --port 3333 --host 0.0.0.0 --devtool eval --progress --colors --hot --content-base dist",
     "build": "webpack --config webpack.config.js"
   },
@@ -19,6 +20,7 @@
     "babel-polyfill": "^6.16.0",
     "babel-preset-latest": "^6.16.0",
     "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-3": "^6.24.1",
     "css-loader": "^0.25.0",
     "html-webpack-plugin": "^2.24.1",
     "less-loader": "^2.2.3",
