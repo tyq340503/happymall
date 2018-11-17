@@ -2,7 +2,7 @@ import axios from 'axios';
 const url = 'http://localhost:3004';
 
 export function artistListAll(){
-    const request = axios.get(`${URL}/artists?q=${keywords}`)
+    const request = axios.get(`${URL}/artists`)
     .then(response => response.data)
     return {
         type: 'GET_ARTISTS_ALL',
