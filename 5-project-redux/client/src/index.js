@@ -6,12 +6,27 @@ import { createStore,applyMiddleware } from 'redux';
 import { promiseMiddleware } from 'redux-promise'
 import Routes from './routes'
 import reducers from './reducers'
+import ReduxThunk from 'redux-thunk';
 
 
-const middleware = applyMiddleware(promiseMiddleware)(createStore);
+// const createStoreWithMiddleware = applyMiddleware(promiseMiddleware,ReduxThunk)(createStore);
+
+// const App = () => {
+//     return (
+//         <Provider store={createStoreWithMiddleware(reducers)}>
+//             <BrowserRouter>
+//                 <Routes />
+//             </BrowserRouter>
+//         </Provider>
+//     )
+// }
+
+// ReactDOM.render(<App />, document.getElementById('root'));
+const createStoreWithMiddleware = applyMiddleware(ReduxThunk);
+const store = createStore(reducers, {}, createStoreWithMiddleware)
 const App = () => {
     return (
-        <Provider store={middleware(reducers)}>
+        <Provider store={store}>
             <BrowserRouter>
                 <Routes />
             </BrowserRouter>
@@ -20,4 +35,3 @@ const App = () => {
 }
 
 ReactDOM.render(<App />, document.getElementById('root'));
-

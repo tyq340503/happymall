@@ -2,15 +2,13 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 import { connect } from 'react-redux';
-import { artistListAll, artistList } from '../actions';
 import { bindActionCreators } from 'redux';
 
-import Search from '../components/search';
-import Artistlist from '../components/artistlist';
+
 
 class HomeContainer extends Component {
     componentWillMount() {
-        this.props.artistListAll();
+        // this.props.artistListAll();
     }
 
     getKeywords(event) {
@@ -22,20 +20,19 @@ class HomeContainer extends Component {
         console.log(this.props)
         return (
             <div>
-                <Search keywords={this.getKeywords} />
-                <Artistlist artists={this.props.artists.artistList} />
+                home
             </div>
         )
     }
 }
 function mapStateToProps(state) {
     return {
-        artists: state.artists
+        // artists: state.artists
     }
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ artistListAll, artistList }, dispatch)
+    return bindActionCreators({ }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer)

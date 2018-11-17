@@ -1,8 +1,11 @@
 import { combineReducers } from 'redux';
-import artists from './artist_reducer';
+import books from './books_reducer';
+// import user from './user_reducer';
+// import artists from './artist_reducer';
 
 const rootReducer = combineReducers({
-    artists
+    // artists
+    books
 })
 
 export default rootReducer;
