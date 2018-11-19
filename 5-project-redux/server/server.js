@@ -55,15 +55,23 @@ app.get('/api/getBook', (req, res) => {
 
 app.get('/api/books', (req, res) => {
     // locahost:3001/api/books?skip=3&limit=2&order=asc
-    let skip = parseInt(req.query.skip);
-    let limit = parseInt(req.query.limit);
-    let order = req.query.order;
+    if(Object.keys(req.query) !=0){
 
-    // ORDER = asc || desc
-    Book.find().skip(skip).sort({ _id: order }).limit(limit).exec((err, doc) => {
-        if (err) return res.status(400).send(err);
-        res.send(doc);
-    })
+        let skip = parseInt(req.query.skip);
+        let limit = parseInt(req.query.limit);
+        let order = req.query.order;
+    
+        // ORDER = asc || desc
+        Book.find().skip(skip).sort({ _id: order }).limit(limit).exec((err, doc) => {
+            if (err) return res.status(400).send(err);
+            res.send(doc);
+        })
+    }else{
+        Book.find().exec((err, doc) => {
+            if (err) return res.status(400).send(err);
+            res.send(doc);
+        })
+    }
 })
 
 app.get('/api/getReviewer', (req, res) => {
@@ -165,7 +173,7 @@ app.delete('/api/delete_book', (req, res) => {
 })
 
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 app.listen(port, () => {
     console.log(`SERVER RUNNNING`)
 })

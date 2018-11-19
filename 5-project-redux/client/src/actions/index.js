@@ -1,5 +1,5 @@
 import axios from 'axios';
-const url = 'http://localhost:3001';
+// const url = 'http://localhost:3001';
 
 export function getBooks(
     limit = 10,
@@ -27,8 +27,9 @@ export function getBooks(
 
 export function auth(){
     const request = axios.get('/api/auth')
-                .then(response => response.data);
-
+                .then(response => response.data)
+                .catch(err=>{console.log(err)})
+    debugger;
     return {
         type:'USER_AUTH',
         payload:request
