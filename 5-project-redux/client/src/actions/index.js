@@ -25,6 +25,17 @@ export function getBooks(
 
 }
 
+export function auth(){
+    const request = axios.get('/api/auth')
+                .then(response => response.data);
+
+    return {
+        type:'USER_AUTH',
+        payload:request
+    }
+
+}
+
 export function getBookWithReviewer(id) {
     const request = axios.get(`/api/getBook?id=${id}`)
 
