@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const BookItem = (item) => {
+    console.log(item);
     return (
         <Link to={`/books/${item._id}`} className="book_item">
              <div className="book_header">
