@@ -6,7 +6,7 @@ const config = require('./config/config').get(process.env.NODE_ENV);
 const app = express();
 
 mongoose.Promise = global.Promise;
-mongoose.connect(config.DATABASE, { useMongoClient: true }, err => {
+mongoose.connect(process.env.MONGOLAB_IVORY_URI || config.DATABASE, { useMongoClient: true }, err => {
     if (err) {
         console.log(err);
     } else {
@@ -55,18 +55,18 @@ app.get('/api/getBook', (req, res) => {
 
 app.get('/api/books', (req, res) => {
     // locahost:3001/api/books?skip=3&limit=2&order=asc
-    if(Object.keys(req.query) !=0){
+    if (Object.keys(req.query) != 0) {
 
         let skip = parseInt(req.query.skip);
         let limit = parseInt(req.query.limit);
         let order = req.query.order;
-    
+
         // ORDER = asc || desc
         Book.find().skip(skip).sort({ _id: order }).limit(limit).exec((err, doc) => {
             if (err) return res.status(400).send(err);
             res.send(doc);
         })
-    }else{
+    } else {
         Book.find().exec((err, doc) => {
             if (err) return res.status(400).send(err);
             res.send(doc);
@@ -118,7 +118,7 @@ app.post('/api/register', (req, res) => {
     const user = new User(req.body);
 
     user.save((err, doc) => {
-        if (err) return res.json({ success: false, err:err });
+        if (err) return res.json({ success: false, err: err });
         res.status(200).json({
             success: true,
             user: doc
