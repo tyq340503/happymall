@@ -14,6 +14,7 @@ const Routes = () => {
             <Switch>
                 <Route path="/" exact component={Auth(Home,null)} />
                 <Route path="/login" exact component={Auth(Login,false)}/>
+                <Route path="/user/register" exact component={Auth(Register,true)}/>
 
             </Switch>
         </Layout>
