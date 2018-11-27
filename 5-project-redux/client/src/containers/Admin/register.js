@@ -56,6 +56,7 @@ class Register extends PureComponent {
                     <div className="form_element">
                         <input
                             type="text"
+                            name="name"
                             placeholder="Enter name"
                             value={this.state.name}
                             onChange={this.handleInput}
@@ -65,6 +66,7 @@ class Register extends PureComponent {
                     <div className="form_element">
                         <input
                             type="text"
+                            name="lastname"
                             placeholder="Enter Lastname"
                             value={this.state.lastname}
                             onChange={this.handleInput}
@@ -74,6 +76,7 @@ class Register extends PureComponent {
                     <div className="form_element">
                         <input
                             type="email"
+                            name="email"
                             placeholder="Enter Email"
                             value={this.state.email}
                             onChange={this.handleInput}
@@ -83,6 +86,7 @@ class Register extends PureComponent {
                     <div className="form_element">
                         <input
                             type="password"
+                            name="password"
                             placeholder="Enter Password"
                             value={this.state.password}
                             onChange={this.handleInput}

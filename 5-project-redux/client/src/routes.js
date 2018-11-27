@@ -5,6 +5,7 @@ import Home from './components/home/home';
 import Layout from './hoc/layout'
 import Auth from './hoc/auth'
 import Login from './containers/Admin/login'
+import Register from './containers/Admin/register';
 
 
 const Routes = () => {

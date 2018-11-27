@@ -4,6 +4,8 @@ export default function (state = {}, action) {
             return { ...state, login: action.payload }
         case 'USER_LOGIN':
             return { ...state, login: action.payload }
+        case 'GET_USER':
+            return { ...state, users: action.payload }
         case 'USER_REGISTER':
             return {
                 ...state,
