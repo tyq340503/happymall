@@ -2,8 +2,33 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
+const passport = require('passport');
+const keys = require('./config/keys');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const config = require('./config/config').get(process.env.NODE_ENV);
+const stripe = require('stripe')(keys.stripeSecretKey);
 const app = express();
+
+passport.use(
+    new GoogleStrategy(
+        {
+            clientID: keys.ClientID,
+            clientSecret: keys.ClientSecret,
+            callbackURL: '/auth/google/callback',
+            proxy: true
+        },
+        async (accessToken, refreshToken, profile, done) => {
+            const existingUser = await User.findOne({ googleId: profile.id });
+
+            if (existingUser) {
+                return done(null, existingUser);
+            }
+
+            const user = await new User({ googleId: profile.id }).save();
+            done(null, user);
+        }
+    )
+);
 
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGOLAB_IVORY_URI || config.DATABASE, { useMongoClient: true }, err => {
@@ -171,6 +196,20 @@ app.delete('/api/delete_book', (req, res) => {
         res.json(true)
     })
 })
+
+app.post('/api/stripe', auth, async (req, res) => {
+    const charge = await stripe.charges.create({
+        amount: 500,
+        currency: 'usd',
+        description: '$5 for 5 credits',
+        source: req.body.id
+    });
+
+    req.user.credits += 5;
+    const user = await req.user.save();
+
+    res.send(user);
+});
 
 
 const port = process.env.PORT || 3001;
