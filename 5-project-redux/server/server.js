@@ -2,11 +2,36 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
+const passport = require('passport');
+const keys = require('./config/keys');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const config = require('./config/config').get(process.env.NODE_ENV);
+const stripe = require('stripe')(keys.stripeSecretKey);
 const app = express();
 
+passport.use(
+    new GoogleStrategy(
+        {
+            clientID: keys.ClientID,
+            clientSecret: keys.ClientSecret,
+            callbackURL: '/auth/google/callback',
+            proxy: true
+        },
+        async (accessToken, refreshToken, profile, done) => {
+            const existingUser = await User.findOne({ googleId: profile.id });
+
+            if (existingUser) {
+                return done(null, existingUser);
+            }
+
+            const user = await new User({ googleId: profile.id }).save();
+            done(null, user);
+        }
+    )
+);
+
 mongoose.Promise = global.Promise;
-mongoose.connect(config.DATABASE, { useMongoClient: true }, err => {
+mongoose.connect(process.env.MONGOLAB_IVORY_URI || config.DATABASE, { useMongoClient: true }, err => {
     if (err) {
         console.log(err);
     } else {
@@ -55,15 +80,23 @@ app.get('/api/getBook', (req, res) => {
 
 app.get('/api/books', (req, res) => {
     // locahost:3001/api/books?skip=3&limit=2&order=asc
-    let skip = parseInt(req.query.skip);
-    let limit = parseInt(req.query.limit);
-    let order = req.query.order;
+    if (Object.keys(req.query) != 0) {
 
-    // ORDER = asc || desc
-    Book.find().skip(skip).sort({ _id: order }).limit(limit).exec((err, doc) => {
-        if (err) return res.status(400).send(err);
-        res.send(doc);
-    })
+        let skip = parseInt(req.query.skip);
+        let limit = parseInt(req.query.limit);
+        let order = req.query.order;
+
+        // ORDER = asc || desc
+        Book.find().skip(skip).sort({ _id: order }).limit(limit).exec((err, doc) => {
+            if (err) return res.status(400).send(err);
+            res.send(doc);
+        })
+    } else {
+        Book.find().exec((err, doc) => {
+            if (err) return res.status(400).send(err);
+            res.send(doc);
+        })
+    }
 })
 
 app.get('/api/getReviewer', (req, res) => {
@@ -110,7 +143,7 @@ app.post('/api/register', (req, res) => {
     const user = new User(req.body);
 
     user.save((err, doc) => {
-        if (err) return res.json({ success: false, err:err });
+        if (err) return res.json({ success: false, err: err });
         res.status(200).json({
             success: true,
             user: doc
@@ -164,8 +197,22 @@ app.delete('/api/delete_book', (req, res) => {
     })
 })
 
+app.post('/api/stripe', auth, async (req, res) => {
+    const charge = await stripe.charges.create({
+        amount: 500,
+        currency: 'usd',
+        description: '$5 for 5 credits',
+        source: req.body.id
+    });
 
-const port = process.env.PORT || 3000;
+    req.user.credits += 5;
+    const user = await req.user.save();
+
+    res.send(user);
+});
+
+
+const port = process.env.PORT || 3001;
 app.listen(port, () => {
     console.log(`SERVER RUNNNING`)
 })

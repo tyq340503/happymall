@@ -1,0 +1,5 @@
+ git remote add heroku https://git.heroku.com/damp-ridge-60963.git
+ git push heroku
+ git push heroku master
+ heroku addons:create mongolab:sandbox
+ heroku config

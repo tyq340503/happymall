@@ -6,7 +6,8 @@ import user from './user_reducer';
 const rootReducer = combineReducers({
     // artists
     user,
-    books
+    books,
+
 })
 
 export default rootReducer;

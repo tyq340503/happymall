@@ -9,12 +9,16 @@ export default function(ComposedClass,reload){
         }
 
         componentWillMount(){
+            // second
+            // console.log("111");
             this.props.dispatch(auth())
+            console.log(this.props);
         }
 
         componentWillReceiveProps(nextProps){
-
-            
+            // after second statetoprops
+            console.log("11");
+            console.log(nextProps);
             this.setState({loading:false})
 
             if(!nextProps.user.login.isAuth){
@@ -39,6 +43,8 @@ export default function(ComposedClass,reload){
         
     }
     function mapStateToProps(state){
+        //come first
+        // console.log(state);
         return{
             user:state.user
         }
