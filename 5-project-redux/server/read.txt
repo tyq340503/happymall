@@ -3,3 +3,6 @@
  git push heroku master
  heroku addons:create mongolab:sandbox
  heroku config
+https://juejin.im/post/5b6c39bde51d45195c079d62
+https://0xzx.com/20190419194542055.html
+https://loveky.github.io/2018/06/05/unit-testing-react-component-with-jest/
